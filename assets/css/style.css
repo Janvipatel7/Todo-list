@@ -5,8 +5,12 @@
     font-family: Arial, sans-serif;
 }
 
+
 body {
-    background: #f4f4f4;
+    background-image: url("../images/bg-image.avif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,11 +19,79 @@ body {
 
 .container {
     background: white;
+    border: 2px solid darkblue;
     padding: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     width: 350px;
 }
+
+/* .todo-input, #taskList li {
+    background: white;
+    border:2px dashed darkblue;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1), 
+                0px 2px 5px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease-in-out;
+}
+
+#taskList li:hover {
+    transform: scale(1.03);
+} */
+#taskList {
+    background: white;
+    border:2px dashed darkblue;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1), 
+                0px 2px 5px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease-in-out;
+}
+
+#taskList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    color: #fff;
+}
+#taskList li:hover {
+    transform: scale(1.03);
+}
+
+.high {
+    background-color: red;
+}
+
+.medium {
+    background-color: yellow;
+    color: black;
+}
+
+.low {
+    background-color: green;
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.delete-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+
 
 h2 {
     text-align: center;
@@ -41,6 +113,7 @@ input, select, button {
 input {
     flex: 1;
 }
+
 
 button {
     background: #28a745;
@@ -86,7 +159,7 @@ li {
 }
 
 .delete-btn {
-    background: red;
+    background: rgba(0, 0, 0, 0.567);
     color: white;
     border: none;
     padding: 5px 8px;
@@ -95,5 +168,6 @@ li {
 }
 
 .delete-btn:hover {
-    background: darkred;
+    background: rgba(139, 0, 0, 0.436);
+    border: 1px solid white;
 }

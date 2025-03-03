@@ -11,15 +11,16 @@
 <body>
     <div class="container">
         <h2>To-Do List</h2>
-        <div class="todo-input">
-            <input type="text" id="taskInput" placeholder="Task Name">
-            <select id="priorityInput">
+        <div class="todo-input py-4">
+            <input type="text" id="taskInput" placeholder="Task Name" class="form-control my-2">
+            <select id="priorityInput" class="form-control my-2">
+                <option value="">--Select Priority--</option>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
             </select>
-            <input type="time" id="timeInput">
-            <button id="addTaskBtn">Add</button>
+            <input type="time" id="timeInput" class="form-control">
+            <button id="addTaskBtn" class="btn btn-primary">Add Task 📌</button>
         </div>
         <ul id="taskList"></ul>
     </div>
@@ -44,39 +45,42 @@
     });
 
     function addTask() {
-        const taskText = taskInput.value.trim();
-        const priority = priorityInput.value;
-        const time = timeInput.value;
+    const taskText = taskInput.value.trim();
+    const priority = priorityInput.value;
+    const time = timeInput.value;
 
-        if (taskText === "" || time === "") return;
+    if (taskText === "" || priority === "" || time === "") return;
 
-        const li = document.createElement("li");
-        li.innerHTML = `
-            <div>
-                <strong>${taskText}</strong>
-                <span class="priority ${priority.toLowerCase()}">${priority}</span>
-                <br>
-                <small>Due: ${time}</small>
-            </div>
-            <button class="delete-btn">X</button>
-        `;
+    const li = document.createElement("li");
+    li.classList.add(priority.toLowerCase()); // Apply the priority color class
 
-        // Toggle complete
-        li.addEventListener("click", () => {
-            li.classList.toggle("completed");
+    li.innerHTML = `
+        <div>
+            <strong>${taskText}</strong>
+            <span class="priority">${priority}</span>
+            <br>
+            <small>Due: ${time}</small>
+        </div>
+        <button class="delete-btn">X</button>
+    `;
+
+    // Toggle complete
+    li.addEventListener("click", () => {
+        li.classList.toggle("completed");
+    });
+
+    // Delete Task
+    li.querySelector(".delete-btn").addEventListener("click", (e) => {
+        e.stopPropagation();
+        li.remove();
+    });
+
+    taskList.appendChild(li);
+    taskInput.value = "";
+    priorityInput.value = "";
+    timeInput.value = "";
+}
         });
-
-        // Delete Task
-        li.querySelector(".delete-btn").addEventListener("click", (e) => {
-            e.stopPropagation();
-            li.remove();
-        });
-
-        taskList.appendChild(li);
-        taskInput.value = "";
-        timeInput.value = "";
-    }
-});
 
     </script>
 </body>
