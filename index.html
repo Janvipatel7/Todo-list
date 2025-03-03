@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priority To-Do List</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>To-Do List</h2>
+        <div class="todo-input">
+            <input type="text" id="taskInput" placeholder="Task Name">
+            <select id="priorityInput">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <input type="time" id="timeInput">
+            <button id="addTaskBtn">Add</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+    <script src="./assets/js/jquery.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const taskInput = document.getElementById("taskInput");
+    const priorityInput = document.getElementById("priorityInput");
+    const timeInput = document.getElementById("timeInput");
+    const addTaskBtn = document.getElementById("addTaskBtn");
+    const taskList = document.getElementById("taskList");
+
+    // Add Task
+    addTaskBtn.addEventListener("click", () => {
+        addTask();
+    });
+
+    taskInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            addTask();
+        }
+    });
+
+    function addTask() {
+        const taskText = taskInput.value.trim();
+        const priority = priorityInput.value;
+        const time = timeInput.value;
+
+        if (taskText === "" || time === "") return;
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <div>
+                <strong>${taskText}</strong>
+                <span class="priority ${priority.toLowerCase()}">${priority}</span>
+                <br>
+                <small>Due: ${time}</small>
+            </div>
+            <button class="delete-btn">X</button>
+        `;
+
+        // Toggle complete
+        li.addEventListener("click", () => {
+            li.classList.toggle("completed");
+        });
+
+        // Delete Task
+        li.querySelector(".delete-btn").addEventListener("click", (e) => {
+            e.stopPropagation();
+            li.remove();
+        });
+
+        taskList.appendChild(li);
+        taskInput.value = "";
+        timeInput.value = "";
+    }
+});
+
+    </script>
+</body>
+</html>
