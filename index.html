@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="./assets/css/bootstrap.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
     <div class="container">
-        <h2>To-Do List</h2>
+        <h2 class="text-color">To-Do List</h2>
         <div class="todo-input py-4">
             <input type="text" id="taskInput" placeholder="Task Name" class="form-control my-2">
             <select id="priorityInput" class="form-control my-2">
@@ -19,69 +20,78 @@
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
             </select>
-            <input type="time" id="timeInput" class="form-control">
-            <button id="addTaskBtn" class="btn btn-primary">Add Task 📌</button>
+   
+            <button id="addTaskBtn" class="btn btn-task mt-2">Add Task 📌</button>
         </div>
         <ul id="taskList"></ul>
     </div>
     <script src="./assets/js/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-    const taskInput = document.getElementById("taskInput");
-    const priorityInput = document.getElementById("priorityInput");
-    const timeInput = document.getElementById("timeInput");
-    const addTaskBtn = document.getElementById("addTaskBtn");
-    const taskList = document.getElementById("taskList");
+            const taskInput = document.getElementById("taskInput");
+            const priorityInput = document.getElementById("priorityInput");
+            const timeInput = document.getElementById("timeInput");
+            const addTaskBtn = document.getElementById("addTaskBtn");
+            const taskList = document.getElementById("taskList");
 
-    // Add Task
-    addTaskBtn.addEventListener("click", () => {
-        addTask();
-    });
-
-    taskInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") {
-            addTask();
+            addTaskBtn.addEventListener("click", () => {
+                if (taskInput.value === "" || priorityInput.value === "-1") {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Invalid Input!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop : false
+                    });
+            return; 
         }
-    });
+                addTask();
+            });
 
-    function addTask() {
-    const taskText = taskInput.value.trim();
-    const priority = priorityInput.value;
-    const time = timeInput.value;
+            taskInput.addEventListener("keypress", (event) => {
+                if (event.key === "Enter") {
+                    addTask();
+                }
+            });
 
-    if (taskText === "" || priority === "" || time === "") return;
+            function addTask() {
+                const taskText = taskInput.value.trim();
+                const priority = priorityInput.value;
 
-    const li = document.createElement("li");
-    li.classList.add(priority.toLowerCase()); // Apply the priority color class
+                if (taskText === "" || priority === "") return;
 
-    li.innerHTML = `
-        <div>
-            <strong>${taskText}</strong>
-            <span class="priority">${priority}</span>
-            <br>
-            <small>Due: ${time}</small>
-        </div>
-        <button class="delete-btn">X</button>
-    `;
+                const li = document.createElement("li");
+                li.classList.add(priority.toLowerCase()); // Apply the priority color class
 
-    // Toggle complete
-    li.addEventListener("click", () => {
-        li.classList.toggle("completed");
-    });
+                li.innerHTML = `
+                        <div>
+                            <strong>${taskText}</strong>
+                            <span class="priority">${priority}</span>
+                            <br>
+                        </div>
+                        <button class="delete-btn">X</button>
+                `;
 
-    // Delete Task
-    li.querySelector(".delete-btn").addEventListener("click", (e) => {
-        e.stopPropagation();
-        li.remove();
-    });
+    
+                li.addEventListener("click", () => {
+                    li.classList.toggle("completed");
+                });
 
-    taskList.appendChild(li);
-    taskInput.value = "";
-    priorityInput.value = "";
-    timeInput.value = "";
-}
+            
+                li.querySelector(".delete-btn").addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    li.remove();
+                });
+
+                taskList.appendChild(li);
+                taskInput.value = "";
+                priorityInput.value = "";
+
+            }
         });
 
     </script>
 </body>
+
 </html>
